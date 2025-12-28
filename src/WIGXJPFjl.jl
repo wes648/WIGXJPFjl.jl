@@ -10,14 +10,21 @@ function __init__()
          Cvoid,
          (Cint, Cint),
          max_two_j, 9)
-#   Threads.@threads :static for i in 1:Threads.nthreads()
+   if VERSION > v"1.12"
    OncePerThread{Vector{Int}}(
       ccall((:wig_thread_temp_init, wigxjpf),
             Cvoid,
             (Cint,),
             max_two_j)
    )
-#      end
+   else
+   Threads.@threads :static for i in 1:Threads.nthreads()
+      ccall((:wig_thread_temp_init, wigxjpf),
+            Cvoid,
+            (Cint,),
+            max_two_j)
+      end
+   end
 end
 
 doubled(i::Integer)::Int = 2i
