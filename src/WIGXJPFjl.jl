@@ -5,17 +5,19 @@ using Wigxjpf_jll
 export wig3j, wig6j, wig9j, wig3jj, wig6jj, wig9jj
 
 function __init__()
-    max_two_j = 1000
-    ccall((:wig_table_init, wigxjpf),
-          Cvoid,
-          (Cint, Cint),
-          max_two_j, 9)
-    Threads.@threads :static for i in 1:Threads.nthreads()
-    ccall((:wig_thread_temp_init, wigxjpf),
-          Cvoid,
-          (Cint,),
-          max_two_j)
-    end
+   max_two_j = 1000
+   ccall((:wig_table_init, wigxjpf),
+         Cvoid,
+         (Cint, Cint),
+         max_two_j, 9)
+#   Threads.@threads :static for i in 1:Threads.nthreads()
+   OncePerThread{Vector{Int}}(
+      ccall((:wig_thread_temp_init, wigxjpf),
+            Cvoid,
+            (Cint,),
+            max_two_j)
+   )
+#      end
 end
 
 doubled(i::Integer)::Int = 2i
