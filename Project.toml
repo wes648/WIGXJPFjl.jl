@@ -1,12 +1,12 @@
 name = "WIGXJPFjl"
 uuid = "c012394e-041f-4dac-954c-af2908646be0"
-authors = ["wes <jhwesterfield@ucdavis.edu>"]
+authors = ["wes <wes.harper2@gmail.com>"]
 repo = "https://github.com/wes648/WIGXJPFjl.jl"
-version = "1.11.3"
+version = "1.13.0"
 
 [deps]
 Wigxjpf_jll = "236017c9-faef-5401-ab52-d2664edfb5d0"
 
 [compat]
 julia = "^1.10.2"
-Wigxjpf_jll = "^1.11.0"
+Wigxjpf_jll = "^1.13.0"
