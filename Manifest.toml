@@ -52,7 +52,7 @@ version = "1.11.0"
 deps = ["Wigxjpf_jll"]
 path = "."
 uuid = "c012394e-041f-4dac-954c-af2908646be0"
-version = "1.13.1"
+version = "1.13.2"
 
 [[deps.Wigxjpf_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl"]
