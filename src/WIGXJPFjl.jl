@@ -1,5 +1,6 @@
 module WIGXJPFjl
 
+using Base.Threads
 using Wigxjpf_jll
 
 export wig3j, wig6j, wig9j, wig3jj, wig6jj, wig9jj
@@ -10,21 +11,21 @@ function __init__()
          Cvoid,
          (Cint, Cint),
          max_two_j, 9)
-   if VERSION > v"1.12"
-   OncePerThread{Vector{Int}}(
+#   if VERSION > v"1.12"
+#   OncePerThread{Vector{Int}}(
+#      ccall((:wig_thread_temp_init, libwigxjpf),
+#            Cvoid,
+#            (Cint,),
+#            max_two_j)
+#   )
+#   else
+   @threads :static for i in 1:nthreads(:default)
       ccall((:wig_thread_temp_init, libwigxjpf),
             Cvoid,
             (Cint,),
             max_two_j)
-   )
-   else
-   Threads.@threads :static for i in 1:Threads.nthreads()
-      ccall((:wig_thread_temp_init, libwigxjpf),
-            Cvoid,
-            (Cint,),
-            max_two_j)
-      end
-   end
+      end # threas.threads
+#   end # if
 end
 
 doubled(i::Integer)::Int = 2i
@@ -33,7 +34,7 @@ doubled(f::Float64)::Int = Int(2.0*f)
 
 function wig3jj(j12::Integer, j22::Integer, j32::Integer,
                 m12::Integer, m22::Integer, m32::Integer)
-    ccall((:wig3jj, libwigxjpf),
+    @spawn :default ccall((:wig3jj, libwigxjpf),
           Cdouble,
           (Cint, Cint, Cint,
            Cint, Cint, Cint),
@@ -47,7 +48,7 @@ wig3j(j1, j2, j3,
 
 function wig6jj(j12::Integer, j22::Integer, j32::Integer,
                 j42::Integer, j52::Integer, j62::Integer)
-    ccall((:wig6jj, libwigxjpf),
+    @spawn :default ccall((:wig6jj, libwigxjpf),
           Cdouble,
           (Cint, Cint, Cint,
            Cint, Cint, Cint),
@@ -62,7 +63,7 @@ wig6j(j1, j2, j3,
 function wig9jj(j12::Integer, j22::Integer, j32::Integer,
                j42::Integer, j52::Integer, j62::Integer,
                j72::Integer, j82::Integer, j92::Integer)
-    ccall((:wig9jj, libwigxjpf),
+    @spawn :default ccall((:wig9jj, libwigxjpf),
           Cdouble,
           (Cint, Cint, Cint,
            Cint, Cint, Cint,
