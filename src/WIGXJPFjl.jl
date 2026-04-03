@@ -34,12 +34,12 @@ doubled(f::Float64)::Int = Int(2.0*f)
 
 function wig3jj(j12::Integer, j22::Integer, j32::Integer,
                 m12::Integer, m22::Integer, m32::Integer)
-    @spawn :default ccall((:wig3jj, libwigxjpf),
+    fetch(@spawn :default ccall((:wig3jj, libwigxjpf),
           Cdouble,
           (Cint, Cint, Cint,
            Cint, Cint, Cint),
           j12, j22, j32,
-          m12, m22, m32)
+          m12, m22, m32))
 end
 
 wig3j(j1, j2, j3,
@@ -48,12 +48,12 @@ wig3j(j1, j2, j3,
 
 function wig6jj(j12::Integer, j22::Integer, j32::Integer,
                 j42::Integer, j52::Integer, j62::Integer)
-    @spawn :default ccall((:wig6jj, libwigxjpf),
+    fetch(@spawn :default ccall((:wig6jj, libwigxjpf),
           Cdouble,
           (Cint, Cint, Cint,
            Cint, Cint, Cint),
           j12, j22, j32,
-          j42, j52, j62)
+          j42, j52, j62))
 end
 
 wig6j(j1, j2, j3,
@@ -63,14 +63,14 @@ wig6j(j1, j2, j3,
 function wig9jj(j12::Integer, j22::Integer, j32::Integer,
                j42::Integer, j52::Integer, j62::Integer,
                j72::Integer, j82::Integer, j92::Integer)
-    @spawn :default ccall((:wig9jj, libwigxjpf),
+    fetch(@spawn :default ccall((:wig9jj, libwigxjpf),
           Cdouble,
           (Cint, Cint, Cint,
            Cint, Cint, Cint,
            Cint, Cint, Cint),
           j12, j22, j32,
           j42, j52, j62,
-          j72, j82, j92)
+          j72, j82, j92))
 end
 
 wig9j(j1, j2, j3,
